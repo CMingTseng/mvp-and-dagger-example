@@ -13,3 +13,5 @@ fully match this chart, the sample is a bit simpler*):
 
 <br/>
 <img src="https://github.com/afollestad/mvp-and-dagger-example/raw/master/mvpchart.png" />
+
+*And of course, "server" above could be replaced with any type of data source, such as a local database.*
