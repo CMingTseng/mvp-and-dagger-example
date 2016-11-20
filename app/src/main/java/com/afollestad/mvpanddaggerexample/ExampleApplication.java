@@ -3,7 +3,6 @@ package com.afollestad.mvpanddaggerexample;
 import android.app.Application;
 
 import com.afollestad.mvpanddaggerexample.activities.MainActivity;
-import com.afollestad.mvpanddaggerexample.modules.AndroidModule;
 import com.afollestad.mvpanddaggerexample.modules.InteractorModule;
 import com.afollestad.mvpanddaggerexample.modules.PresenterModule;
 
@@ -18,19 +17,23 @@ public class ExampleApplication extends Application {
 
     private ApplicationComponent component;
 
+    /**
+     * Newly added modules must be added to the @Component annotation here. You must also provide
+     * further inject() methods for new classes that want to perform injection.
+     */
     @Singleton
-    @Component(modules = {AndroidModule.class, InteractorModule.class, PresenterModule.class})
+    @Component(modules = {InteractorModule.class, PresenterModule.class})
     public interface ApplicationComponent {
-        void inject(ExampleApplication application);
-
         void inject(MainActivity mainActivity);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // This setups up the component which is used by other views (activities/fragments/etc., not Android views) for injection.
+        // This pulls all modules which have statically declared @Provides methods automatically.
         component = DaggerExampleApplication_ApplicationComponent.builder().build();
-        component().inject(this);
     }
 
     public ApplicationComponent component() {

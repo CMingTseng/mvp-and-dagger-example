@@ -5,6 +5,9 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 /**
+ * An actual View, not View from 'MVP'. The height always matches the width, which is used to provide
+ * a consistent grid in this sample app.
+ *
  * @author Aidan Follestad (afollestad)
  */
 public class SquareImageView extends ImageView {

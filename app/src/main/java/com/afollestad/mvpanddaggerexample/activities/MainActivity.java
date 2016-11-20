@@ -38,9 +38,14 @@ public class MainActivity extends AppCompatActivity implements MainViews, MainAd
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // The component setup in the ExampleApplication takes all Module classes and fills in @Inject
+        // annotated fields for you automatically.
         ((ExampleApplication) getApplication()).component().inject(this);
 
         adapter = new MainAdapter(this);
+
+        // Dagger does not provide View injection, so we use ButterKnife for that.
         unbinder = ButterKnife.bind(this);
 
         recyclerView.setLayoutManager(new GridLayoutManager(this, getResources().getInteger(R.integer.grid_width)));
@@ -50,13 +55,18 @@ public class MainActivity extends AppCompatActivity implements MainViews, MainAd
     @Override
     protected void onResume() {
         super.onResume();
+
+        // Tell the main Presenter that the View layer is visible.
         presenter.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+
+        // Tell the main Presenter that the View layer is going away.
         presenter.onPause();
+
         if (isFinishing()) {
             unbinder.unbind();
             unbinder = null;
@@ -85,6 +95,8 @@ public class MainActivity extends AppCompatActivity implements MainViews, MainAd
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
+
+    // This click listener is from the RecyclerView adapter that we setup.
     @Override
     public void onClick(int index) {
         presenter.onItemClicked(index);

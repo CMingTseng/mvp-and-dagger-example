@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Interactors are the data layer. This implemenation class is instantiated by Dagger.
+ *
  * @author Aidan Follestad (afollestad)
  */
 public class ItemsInteractorImpl implements ItemsInteractor {
